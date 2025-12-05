@@ -15,6 +15,7 @@
             --card-bg: #2a2a2a;
             --input-bg: #333;
             --border-color: #444;
+            --price-color: #28a745; /* สีเขียวสำหรับราคา */
         }
 
         body {
@@ -36,13 +37,14 @@
 
         /* --- Header/Hero Section --- */
         header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://googleusercontent.com/image_collection/image_retrieval/some_id_string') center/cover; /* Placeholder for image of a nice bus/van */
+            /* Placeholder: รูปภาพรถบัสสวยงาม */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://placehold.co/1200x600/1a1a1a/f0f0f0?text=CHOTCHANTRA') center/cover;
             height: 60vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            opacity: 0; /* สำหรับ Fade-in Animation */
+            opacity: 0;
             transition: opacity 1.5s ease-out;
         }
         
@@ -76,8 +78,97 @@
             text-align: center;
             margin-bottom: 40px;
         }
+        
+        /* --- Services Grid / Price Cards --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
 
-        /* --- Form Styling --- */
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            border-left: 5px solid var(--accent-orange);
+            height: 100%; /* ทำให้ความสูงเท่ากัน */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .price-tag {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--price-color);
+            margin-top: 15px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.3);
+        }
+        
+        /* --- Vehicle Fleet Section --- */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .vehicle-detail {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .vehicle-detail:hover {
+            box-shadow: 0 8px 25px rgba(255, 102, 0, 0.5);
+        }
+
+        .vehicle-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .vehicle-info {
+            padding: 20px;
+        }
+        
+        .vehicle-info h3 {
+            color: var(--accent-orange);
+            margin-top: 0;
+        }
+        
+        .specs-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.9em;
+        }
+        
+        .specs-list li {
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .specs-list li::before {
+            content: '•';
+            color: var(--accent-orange);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+
+        /* --- Form Styling (ปรับปรุงปุ่มและ Input) --- */
         #quotation-form {
             background-color: var(--card-bg);
             padding: 40px;
@@ -112,7 +203,11 @@
             font-weight: 400;
         }
 
-        select, textarea {
+        input[type="text"], 
+        input[type="number"], 
+        input[type="date"],
+        select, 
+        textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -128,33 +223,39 @@
             width: 100%;
             padding: 15px;
             font-size: 1.2em;
+            background-color: var(--accent-orange);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #e65c00; 
+        }
+        
+        button[type="submit"]:disabled {
+            background-color: #444;
+            cursor: not-allowed;
         }
 
-        /* --- Services Grid --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            text-align: center;
+        /* --- Loader for Submission (สำคัญสำหรับการแจ้งสถานะ) --- */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-orange);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
         }
 
-        .service-card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-            border-left: 5px solid var(--accent-orange);
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.3);
-        }
-
-        .service-card h3 {
-            color: var(--text-light);
-            margin-top: 10px;
-            font-size: 1.5em;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* --- Contact Footer --- */
@@ -163,6 +264,15 @@
             padding: 40px 0;
             text-align: center;
             color: #888;
+        }
+        
+        footer a {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
         }
         
         /* --- Responsive Design --- */
@@ -187,23 +297,99 @@
 
     <section id="services">
         <div class="container">
-            <h2>บริการของเรา</h2>
+            <h2>บริการและราคาเริ่มต้น</h2>
             <div class="services-grid">
+                <!-- 1. เช่ารถบัสปรับอากาศ (ขนาดใหญ่) -->
                 <div class="service-card">
-                    <span style="font-size: 2em; color: var(--accent-orange);">🚌</span>
-                    <h3>เช่ารถบัสปรับอากาศ</h3>
-                    <p>สำหรับทริปหมู่คณะขนาดใหญ่, ทัศนศึกษา, หรือการเดินทางระยะไกล</p>
+                    <div>
+                        <span style="font-size: 2em; color: var(--accent-orange);">🚍</span>
+                        <h3>เช่ารถบัสปรับอากาศ (ใหญ่)</h3>
+                        <p>สำหรับทริปหมู่คณะขนาดใหญ่ (35-50 ที่นั่ง), ทัศนศึกษา พร้อมสิ่งอำนวยความสะดวกครบครัน</p>
+                    </div>
+                    <div class="price-tag">
+                        เริ่มต้น 6,000 - 9,000 บาท/วัน
+                    </div>
                 </div>
+                
+                <!-- 2. เช่ารถตู้ VIP -->
                 <div class="service-card">
-                    <span style="font-size: 2em; color: var(--accent-orange);">🚐</span>
-                    <h3>เช่ารถตู้ VIP</h3>
-                    <p>สำหรับทริปครอบครัว, การประชุม, หรือการเดินทางที่ต้องการความสะดวกสบายส่วนตัว</p>
+                    <div>
+                        <span style="font-size: 2em; color: var(--accent-orange);">🚐</span>
+                        <h3>เช่ารถตู้ VIP</h3>
+                        <p>สำหรับทริปครอบครัว, การประชุม, หรือการเดินทางที่ต้องการความสะดวกสบายส่วนตัว (9-14 ที่นั่ง)</p>
+                    </div>
+                    <div class="price-tag">
+                        เริ่มต้น 1,800 - 2,500 บาท/วัน
+                    </div>
                 </div>
+                
+                <!-- 3. เช่ารถบัสขนาดเล็ก (แทนที่การเช่าเหมา) -->
                 <div class="service-card">
-                    <span style="font-size: 2em; color: var(--accent-orange);">🛣️</span>
-                    <h3>เช่าเหมาพร้อมคนขับ</h3>
-                    <p>บริการคนขับมืออาชีพ ประสบการณ์สูง ทุกเส้นทางในประเทศ</p>
+                    <div>
+                        <span style="font-size: 2em; color: var(--accent-orange);">🚌</span>
+                        <h3>เช่ารถตู้ธรรมดา</h3>
+                        <p>สำหรับหมู่คณะขนาดกลาง (20-30 ที่นั่ง) ที่ต้องการความคล่องตัวสูง</p>
+                    </div>
+                    <div class="price-tag">
+                        เริ่มต้น 3,500 - 5,000 บาท/วัน
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+    
+    <hr style="border-color: var(--border-color); margin: 0;">
+
+    <section id="fleet">
+        <div class="container">
+            <h2>รายละเอียดของรถ (Vehicle Fleet)</h2>
+            <div class="fleet-grid">
+                
+                <!-- รถตู้ VIP -->
+                <div class="vehicle-detail">
+                    <!-- สามารถเปลี่ยนลิงก์นี้เป็นรูปรถตู้จริงของคุณได้เลย -->
+                    <img src="https://placehold.co/800x500/000/fff?text=VIP+Van+9-14+Seats" alt="รูปรถตู้ VIP" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3>รถตู้ VIP (9-14 ที่นั่ง)</h3>
+                        <p>รถตู้ปรับปรุงใหม่ เบาะนั่งสบาย มีระบบความบันเทิงครบวงจร เพื่อการเดินทางส่วนตัว</p>
+                        <ul class="specs-list">
+                            <li>จำนวนที่นั่ง: 9-14</li>
+                            <li>สิ่งอำนวยความสะดวก: เบาะนวดไฟฟ้า (บางรุ่น), Free WiFi, เครื่องเสียง, USB Charger</li>
+                            <li>ราคาเริ่มต้น: 1,800 บาท/วัน (ไม่รวมน้ำมัน/ทางด่วน)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- รถบัสขนาดเล็ก -->
+                <div class="vehicle-detail">
+                    <!-- สามารถเปลี่ยนลิงก์นี้เป็นรูปรถบัสเล็กจริงของคุณได้เลย -->
+                    <img src="https://placehold.co/800x500/333/fff?text=Mini+Bus+20-30+Seats" alt="รูปรถบัสขนาดเล็ก" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3>รถตู้ธรรมดา (20-30 ที่นั่ง)</h3>
+                        <p>รถตู้ธรรมดาขนาดกะทัดรัด เหมาะสำหรับทริปที่ไม่ใหญ่มาก เน้นความคล่องตัวในการเข้าพื้นที่จำกัด</p>
+                        <ul class="specs-list">
+                            <li>จำนวนที่นั่ง: 20-30</li>
+                            <li>สิ่งอำนวยความสะดวก: ระบบปรับอากาศเย็นฉ่ำ, เครื่องเสียง, เบาะนั่งสบาย</li>
+                            <li>ราคาเริ่มต้น: 3,500 บาท/วัน (ไม่รวมน้ำมัน/ทางด่วน)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- รถบัสปรับอากาศ (ขนาดใหญ่) -->
+                <div class="vehicle-detail">
+                    <!-- สามารถเปลี่ยนลิงก์นี้เป็นรูปรถบัสใหญ่จริงของคุณได้เลย -->
+                    <img src="https://placehold.co/800x500/444/fff?text=Coach+Bus+40-50+Seats" alt="รูปรถบัสปรับอากาศ" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3>รถบัสขนาดใหญ่ (40-50 ที่นั่ง)</h3>
+                        <p>รถบัสมาตรฐานสูง ระบบความปลอดภัยครบครัน พร้อมห้องสุขาและสิ่งอำนวยความสะดวก</p>
+                        <ul class="specs-list">
+                            <li>จำนวนที่นั่ง: 35-50</li>
+                            <li>สิ่งอำนวยความสะดวก: ห้องสุขา, Free WiFi (ตามรุ่น), ระบบคาราโอเกะ, GPS Tracking</li>
+                            <li>ราคาเริ่มต้น: 6,000 บาท/วัน (ไม่รวมน้ำมัน/ทางด่วน)</li>
+                        </ul>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -258,7 +444,7 @@
                     <textarea id="route_details" name="Route_Details" rows="4" placeholder="เช่น: กรุงเทพฯ -> ชลบุรี -> ระยอง (3 วัน 2 คืน)" required></textarea>
                 </div>
                 
-                <button type="submit" id="submit-button">ส่งคำขอใบเสนอราคา</button>
+                <button type="submit" id="submit-button">จอง</button>
                 <div id="form-status" style="margin-top: 15px; text-align: center;"></div>
             </form>
         </div>
@@ -267,7 +453,7 @@
     <footer>
         <p>โชติจันทรา เบสท์ ทราเวล เซอร์วิส จำกัด</p>
         <p>ที่อยู่: 110 หมู่ 2 ต.พระประโทน อ.เมืองนครปฐม จ.นครปฐม 73000</p>
-        <p>ติดต่อ: <a href="tel:08x-xxxxxxx" style="color: var(--accent-orange);">08X-XXX-XXXX</a> | Email: info@chotjantra.co.th</p>
+        <p>ติดต่อ: <a href="tel:08X-XXX-XXXX" style="color: var(--accent-orange);">08X-XXX-XXXX</a> | Email: info@chotjantra.co.th</p>
     </footer>
 
     <script>
@@ -291,6 +477,7 @@
             const statusDiv = document.getElementById('form-status');
             const submitBtn = document.getElementById('submit-button');
 
+            // เพิ่ม Loader และปิดปุ่ม
             statusDiv.innerHTML = '<span class="loader" style="display:inline-block;"></span> กำลังส่งข้อมูล...';
             submitBtn.disabled = true;
             
@@ -312,6 +499,12 @@
                     method: 'POST',
                     body: formData 
                 });
+                
+                // ตรวจสอบสถานะการตอบกลับ
+                if (!response.ok) {
+                     throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
 
                 if (data.status === 'success') {
